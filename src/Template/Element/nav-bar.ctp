@@ -8,10 +8,11 @@
             <div class="collapse navbar-collapse navbar-menubuilder">
                 <ul class="nav navbar-nav navbar-custom navbar-left">
                     <li><a href="/projects">Home</a></li>
-                    <li><a href="/projects/signin">Sign in!</a></li>
                     <li><a href="/projects/add">Add</a></li>
                     <li><a href="/projects/uploads">Uploads</a></li>
                     <li><a href="/projects/midiplayer">MIDI Player</a></li>
+                    <li><a href="/users/login">Sign In!</a></li>
+                    <li><a href="/users/register">Sign Up!</a></li>
                 </ul>
             </div>
         </div>

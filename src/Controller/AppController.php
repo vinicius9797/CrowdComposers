@@ -42,22 +42,34 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+
+        $this->loadComponent('Auth', [
+            'loginRedirect' => [
+            'controller' => 'Projects',
+            'action' => 'index'
+            ],
+            'logoutRedirect' => [
+            'controller' => 'Projects',
+            'action' => 'index'
+            ]
+            ]);
+
     }
 
     public $helpers = [
-        'Html' => [
-            'className' => 'Bootstrap.BootstrapHtml'
-        ],
-        'Form' => [
-            'className' => 'Bootstrap.BootstrapForm',
-            'useCustomFileInput' => true
-        ],
-        'Paginator' => [
-            'className' => 'Bootstrap.BootstrapPaginator'
-        ],
-        'Modal' => [
-            'className' => 'Bootstrap.BootstrapModal'
-        ]
+    'Html' => [
+    'className' => 'Bootstrap.BootstrapHtml'
+    ],
+    'Form' => [
+    'className' => 'Bootstrap.BootstrapForm',
+    'useCustomFileInput' => true
+    ],
+    'Paginator' => [
+    'className' => 'Bootstrap.BootstrapPaginator'
+    ],
+    'Modal' => [
+    'className' => 'Bootstrap.BootstrapModal'
+    ]
     ];
 
     /**
@@ -70,8 +82,14 @@ class AppController extends Controller
     {
         if (!array_key_exists('_serialize', $this->viewVars) &&
             in_array($this->response->type(), ['application/json', 'application/xml'])
-        ) {
+            ) {
             $this->set('_serialize', true);
-        }
     }
+}
+
+    public function beforeFilter(Event $event)
+    {
+        $this->Auth->allow(['index', 'midiplayer', 'uploads', 'register']);
+    }
+
 }

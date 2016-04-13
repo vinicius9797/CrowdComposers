@@ -31,18 +31,18 @@ class ProjectsTable extends Table{
 	{
 		$number = round(microtime(true));
 		$temp = explode(".", $_FILES["audiofile"]["name"]);
-		$uploadfile = basename($_FILES['audiofile']['name']);
-		$uploadfile = preg_replace('/\s+/', '', $uploadfile);
+		$uploadfile_basename = basename($_FILES['audiofile']['name']);
+		$uploadfile = preg_replace('/\s+/', '', $uploadfile_basename);
 		$info = pathinfo($uploadfile);
-		$upload_name = basename($uploadfile, '.' .$info['extension']) . '.' . end($temp);
-		$upload_name = preg_replace('/\s+/', '', $upload_name);
-		$uploadtitle = pg_escape_string($data['title']) . '.' . end($temp);
-		$uploadtitle = preg_replace('/\s+/', '', $uploadtitle);
+		$upload_name_basename = basename($uploadfile, '.' .$info['extension']) . '.' . end($temp);
+		$upload_name = preg_replace('/\s+/', '', $upload_name_basename);
+		$uploadtitle_basename = pg_escape_string($data['title']) . '.' . end($temp);
+		$uploadtitle = preg_replace('/\s+/', '', $uploadtitle_basename);
 		$data['audionumber'] = $number;
 		if (empty($data['title'])) {
-			$data['title'] = strtolower($upload_name);
+			$data['title'] = strtolower($upload_name_basename);
 		}else{
-			$data['title']=strtolower($uploadtitle);
+			$data['title']=strtolower($uploadtitle_basename);
 		}
 
 	}	

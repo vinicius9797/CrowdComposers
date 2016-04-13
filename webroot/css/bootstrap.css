@@ -45,6 +45,7 @@ progress,
 video {
   display: inline-block;
   vertical-align: baseline;
+  background-image: url(../webroot/img/back.jpg);
   background-color: #009dd1;
   width: 100%;
   border-radius: 5px;

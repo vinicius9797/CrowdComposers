@@ -3,3 +3,5 @@
 /tmp/*
 /logs/*
 /nbproject/private/
+/webroot/tracks/*
+/nbproject/

@@ -37,7 +37,7 @@ class ProjectsController extends AppController {
 	$project = $this->Projects->get($id);
 	$this->set('project', $project);
 	if (file_exists($project->id . $project->title)) {
-	    # code...
+	    # testing git merge...
 	}
     }
 

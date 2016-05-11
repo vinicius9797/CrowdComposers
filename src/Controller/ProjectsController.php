@@ -18,7 +18,7 @@ use Cake\Network\Session;
 class ProjectsController extends AppController {
 
     public $name = 'Projects';
-    
+
     public function index() {
 	$this->viewBuilder()->layout('project_layout');
     }
@@ -67,7 +67,6 @@ class ProjectsController extends AppController {
 	    //Query Vars
 	    $uploadNameQuery = $project->id . trim($upload_name);
 	    $uploadTitleQuery = $project->id . trim($uploadtitle);
-	    $idQuery = $project->id;
 
 	    if ($this->Projects->save($project)) {
 		if (is_uploaded_file($_FILES['audiofile']['tmp_name'])) {
@@ -114,9 +113,7 @@ class ProjectsController extends AppController {
 	$download = $this->Projects->get($id);
 	$this->set('download', $download);
 	$linkdownload = $download->id . $download->title;
-	$pathfile = WWW_ROOT . 'tracks' . $linkdownload;
 
-	$path = $this->Projects->get($id);
 	$this->response->file(WWW_ROOT . 'tracks' . DS . $linkdownload, array(
 	    'download' => true,
 	    'name' => $download->title,

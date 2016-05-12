@@ -17,116 +17,118 @@ use Cake\Network\Session;
 
 class ProjectsController extends AppController {
 
-    public $name = 'Projects';
+	public $name = 'Projects';
 
-    public function index() {
-	$this->viewBuilder()->layout('project_layout');
-    }
-
-    public function midiPlayer() {
-	$this->viewBuilder()->layout('midi');
-    }
-
-    public function uploads() {
-	$this->viewBuilder()->layout('project_layout');
-	$this->set('projects', $this->paginate($this->Projects));
-    }
-
-    public function files($id = null) {
-	$this->viewBuilder()->layout('project_layout');
-	$project = $this->Projects->get($id);
-	$this->set('project', $project);
-	if (file_exists($project->id . $project->title)) {
-	    # testing git merge...
+	public function index() {
+		$this->viewBuilder()->layout('project_layout');
+		$this->set('isLogged', $this->Auth->user('username'));
 	}
-    }
 
-    public function add() {
-	$this->viewBuilder()->layout('project_layout');
-	$project = $this->Projects->newEntity();
-
-	if ($this->request->is(['post', 'put'])) {
-	    $this->Projects->patchEntity($project, $this->request->data);
-
-	    //Saving user ID and username on database.
-	    $project->uploader_id = $this->Auth->user('id');
-	    $project->uploader = $this->Auth->user('username');
-
-	    $uploaddir = chdir('tracks');
-
-	    //Explode on file extension
-	    $temp = explode(".", $_FILES["audiofile"]["name"]);
-	    $uploadfile_basename = pg_escape_string(basename($_FILES['audiofile']['name']));
-	    $uploadfile = preg_replace('/\s+/', '', $uploadfile_basename);
-	    $info = pathinfo($uploadfile);
-	    $upload_name_basename = basename(strtolower(basename(($uploadfile), '.' . $info['extension'])) . '.' . end($temp));
-	    $upload_name = preg_replace('/\s+/', '', $upload_name_basename);
-	    $uploadtitle_basename = strtolower(pg_escape_string(($this->request->data['title']))) . '.' . end($temp);
-	    $uploadtitle = preg_replace('/\s+/', '', $uploadtitle_basename);
-	    $pathfile = DS . 'var' . DS . 'www' . DS . 'webroot' . DS . 'tracks' . DS;
-	    //Query Vars
-	    $uploadNameQuery = $project->id . trim($upload_name);
-	    $uploadTitleQuery = $project->id . trim($uploadtitle);
-
-	    if ($this->Projects->save($project)) {
-		if (is_uploaded_file($_FILES['audiofile']['tmp_name'])) {
-		    $this->Flash->success('Seu arquivo foi enviado!');
-		}
-		else {
-		    $this->Flash->error('O arquivo não pôde ser enviado, verifique sua conexão.');
-		}
-
-		if (empty($this->request->data['title'])) {
-		    move_uploaded_file(pg_escape_string($_FILES['audiofile']['tmp_name']), $project->id . $upload_name);
-		    $projectsTable = TableRegistry::get('Projects');
-		    $projectQ = $projectsTable->get($project->id);
-		    $projectQ->pathtofile = $pathfile . $projectQ->id . $uploadNameQuery;
-		    $projectQ->musicname = strtolower($upload_name);
-
-		    $projectsTable->save($projectQ);
-		    $this->redirect(['action' => 'index']);
-		}
-		else {
-		    move_uploaded_file(pg_escape_string($_FILES['audiofile']['tmp_name']), $project->id . $uploadtitle);
-		    $projectsTable = TableRegistry::get('Projects');
-		    $projectQ = $projectsTable->get($project->id);
-		    $projectQ->pathtofile = $pathfile . $projectQ->id . $uploadTitleQuery;
-		    $projectQ->musicname = $this->request->data['title'];
-
-
-
-		    $projectsTable->save($projectQ);
-		    $this->redirect(['action' => 'index']);
-		}
-	    }
-	    else {
-		$this->Flash->error('Verifique se o arquivo é MP3, WAV ou MIDI e tente novamente.');
-	    }
+	public function midiPlayer() {
+		$this->viewBuilder()->layout('midi');
 	}
-	$this->set(compact('project'));
-    }
 
-    public function downloads($id = null) {
+	public function uploads() {
+		$this->viewBuilder()->layout('project_layout');
+		$this->set('projects', $this->paginate($this->Projects));
+	}
+
+	public function files($id = null) {
+		$this->viewBuilder()->layout('project_layout');
+		$project = $this->Projects->get($id);
+		$this->set('project', $project);
+		if (file_exists($project->id . $project->title)) {
+			# testing git merge...
+		}
+	}
+
+	public function add() {
+		$this->viewBuilder()->layout('project_layout');
+		$project = $this->Projects->newEntity();
+
+		if ($this->request->is(['post', 'put'])) {
+			$this->Projects->patchEntity($project, $this->request->data);
+
+			//Saving user ID and username on database.
+			$project->uploader_id = $this->Auth->user('id');
+			$project->uploader = $this->Auth->user('username');
+
+			$uploaddir = chdir('tracks');
+
+			//Explode on file extension
+			$temp = explode(".", $_FILES["audiofile"]["name"]);
+			$uploadfile_basename = pg_escape_string(basename($_FILES['audiofile']['name']));
+			$uploadfile = preg_replace('/\s+/', '', $uploadfile_basename);
+			$info = pathinfo($uploadfile);
+			$upload_name_basename = basename(strtolower(basename(($uploadfile), '.' . $info['extension'])) . '.' . end($temp));
+			$upload_name = preg_replace('/\s+/', '', $upload_name_basename);
+			$uploadtitle_basename = strtolower(pg_escape_string(($this->request->data['title']))) . '.' . end($temp);
+			$uploadtitle = preg_replace('/\s+/', '', $uploadtitle_basename);
+			$pathfile = DS . 'var' . DS . 'www' . DS . 'webroot' . DS . 'tracks' . DS;
+			//Query Vars
+			$uploadNameQuery = $project->id . trim($upload_name);
+			$uploadTitleQuery = $project->id . trim($uploadtitle);
+
+			if ($this->Projects->save($project)) {
+				if (is_uploaded_file($_FILES['audiofile']['tmp_name'])) {
+					$this->Flash->success('Seu arquivo foi enviado!');
+				}
+				else {
+					$this->Flash->error('O arquivo não pôde ser enviado, verifique sua conexão.');
+				}
+
+				if (empty($this->request->data['title'])) {
+					move_uploaded_file(pg_escape_string($_FILES['audiofile']['tmp_name']), $project->id . $upload_name);
+					$projectsTable = TableRegistry::get('Projects');
+					$projectQ = $projectsTable->get($project->id);
+					$projectQ->pathtofile = $pathfile . $projectQ->id . $uploadNameQuery;
+					$projectQ->musicname = strtolower($upload_name);
+
+					$projectsTable->save($projectQ);
+					$this->redirect(['action' => 'index']);
+				}
+				else {
+					move_uploaded_file(pg_escape_string($_FILES['audiofile']['tmp_name']), $project->id . $uploadtitle);
+					$projectsTable = TableRegistry::get('Projects');
+					$projectQ = $projectsTable->get($project->id);
+					$projectQ->pathtofile = $pathfile . $projectQ->id . $uploadTitleQuery;
+					$projectQ->musicname = $this->request->data['title'];
 
 
-	$this->viewBuilder()->layout('project_layout');
-	$download = $this->Projects->get($id);
-	$this->set('download', $download);
-	$linkdownload = $download->id . $download->title;
 
-	$this->response->file(WWW_ROOT . 'tracks' . DS . $linkdownload, array(
-	    'download' => true,
-	    'name' => $download->title,
-	));
-	return $this->response;
-    }
+					$projectsTable->save($projectQ);
+					$this->redirect(['action' => 'index']);
+				}
+			}
+			else {
+				$this->Flash->error('Verifique se o arquivo é MP3, WAV ou MIDI e tente novamente.');
+			}
+		}
+		$this->set(compact('project'));
+	}
 
-    public function signIn() {
-	$this->viewBuilder()->layout('project_layout');
-    }
+	public function downloads($id = null) {
 
-    public function apiTest() {
-	$this->viewBuilder()->layout('project_layout');
-    }
+
+		$this->viewBuilder()->layout('project_layout');
+		$download = $this->Projects->get($id);
+		$this->set('download', $download);
+		$linkdownload = $download->id . $download->title;
+
+		$this->response->file(WWW_ROOT . 'tracks' . DS . $linkdownload, array(
+		    'download' => true,
+		    'name' => $download->title,
+		));
+		$this->redirect(['action' => 'uploads']);
+		return $this->response;
+	}
+
+	public function signIn() {
+		$this->viewBuilder()->layout('project_layout');
+	}
+
+	public function apiTest() {
+		$this->viewBuilder()->layout('project_layout');
+	}
 
 }

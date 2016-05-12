@@ -57,7 +57,7 @@
             echo $this->element('footer');
         }
     ?>
-
+    
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>

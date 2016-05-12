@@ -6,7 +6,7 @@ use Cake\Event\Event;
 
 class UsersController extends AppController{
 
-    public $name = 'Users';
+	public $name = 'Users';
 	public function register()
 	{
 		$this->viewBuilder()->layout('project_layout');

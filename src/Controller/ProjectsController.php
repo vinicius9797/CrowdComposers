@@ -26,14 +26,17 @@ class ProjectsController extends AppController {
 
 	public function midiPlayer() {
 		$this->viewBuilder()->layout('midi');
+		$this->set('isLogged', $this->Auth->user('username'));
 	}
 
 	public function uploads() {
 		$this->viewBuilder()->layout('project_layout');
 		$this->set('projects', $this->paginate($this->Projects));
+		$this->set('isLogged', $this->Auth->user('username'));
 	}
 
 	public function files($id = null) {
+		$this->set('isLogged', $this->Auth->user('username'));
 		$this->viewBuilder()->layout('project_layout');
 		$project = $this->Projects->get($id);
 		$this->set('project', $project);
@@ -45,6 +48,7 @@ class ProjectsController extends AppController {
 	public function add() {
 		$this->viewBuilder()->layout('project_layout');
 		$project = $this->Projects->newEntity();
+		$this->set('isLogged', $this->Auth->user('username'));
 
 		if ($this->request->is(['post', 'put'])) {
 			$this->Projects->patchEntity($project, $this->request->data);
@@ -108,12 +112,11 @@ class ProjectsController extends AppController {
 	}
 
 	public function downloads($id = null) {
-
-
 		$this->viewBuilder()->layout('project_layout');
 		$download = $this->Projects->get($id);
 		$this->set('download', $download);
 		$linkdownload = $download->id . $download->title;
+		$this->set('isLogged', $this->Auth->user('username'));
 
 		$this->response->file(WWW_ROOT . 'tracks' . DS . $linkdownload, array(
 		    'download' => true,
@@ -125,6 +128,7 @@ class ProjectsController extends AppController {
 
 	public function signIn() {
 		$this->viewBuilder()->layout('project_layout');
+		$this->set('isLogged', $this->Auth->user('username'));
 	}
 
 	public function apiTest() {

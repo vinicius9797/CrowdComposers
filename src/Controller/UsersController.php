@@ -11,6 +11,11 @@ class UsersController extends AppController{
 	{
 		$this->viewBuilder()->layout('project_layout');
 		$user = $this->Users->newEntity();
+
+		if ($this->Auth->user()) {
+			$this->Flash->error(_('Já existe um usuário logado. Por favor, faça o logout.'));
+			return $this->redirect(['controller' => 'Projects', 'action' => 'index']);
+		}
 		if ($this->request->is('post')) {
 			$user = $this->Users->patchEntity($user, $this->request->data);
 			if ($this->Users->save($user)) {
@@ -32,6 +37,11 @@ class UsersController extends AppController{
 	public function login()
 	{
 		$this->viewBuilder()->layout('project_layout');
+
+		if ($this->Auth->user()) {
+			$this->Flash->error(_('Já existe um usuário logado. Por favor, faça o logout.'));
+			return $this->redirect(['controller' => 'Projects', 'action' => 'index']);
+		}
 		if ($this->request->is('post')) {
 			$user = $this->Auth->identify();
 			if ($user) {

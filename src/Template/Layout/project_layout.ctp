@@ -21,6 +21,7 @@
     
     <?= $this->Html->meta('icon') ?>
     <?= $this->Html->css('bootstrap') ?>
+    <?= $this->Html->script('ajaxSearch.js'); ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>

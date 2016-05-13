@@ -17,7 +17,7 @@
 				<li><a href="/users/login">Login</a></li>
 				<li><a href="/users/register">Register</a></li>
 				<?php else : ?>
-				<li><a href="#">Welcome, <?= $isLogged?></a></li>
+				<li class="active"><a href="#">Welcome, <?= $isLogged?></a></li>
 				<li><a href="/users/logout">Logout</a></li>
 				<?php endif; ?>
 			</ul>

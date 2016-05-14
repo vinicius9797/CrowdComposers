@@ -18,7 +18,8 @@
 				echo $this->Form->input('audiofile', [
 				'type'=>'file',
 				 'label'=>'Arquivo',
-				 'button-label'=>'Procurar...'
+				 'button-label'=>'Procurar...',
+				 'required' => 'true',
 				 ]);?>
 				<?php echo $this->Html->label('Só são aceitos arquivos nos formatos MP3, WAV e MIDI.', 'info') ; ?>
 

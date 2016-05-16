@@ -54,10 +54,13 @@ video {
 
 a {
   background-color: transparent;
+  font-family: 'Raleway', sans-serif;
+  color: white;
 }
 a:active,
 a:hover {
   outline: 0;
+  color: white;
 }
 abbr[title] {
   border-bottom: 1px dotted;
@@ -1108,13 +1111,13 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #337ab7;
+  color: #FFFFFF;
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: #23527c;
-  text-decoration: underline;
+  color: #FFFFFF;
+  text-decoration: none;
 }
 a:focus {
   outline: thin dotted;

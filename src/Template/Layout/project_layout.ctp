@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.materialdesignicons.com/1.5.54/css/materialdesignicons.min.css">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+     <script src="https://use.fontawesome.com/b2114de3d3.js"></script>
    <!-- SoundCloud API -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <!-- jPlayer Skin -->

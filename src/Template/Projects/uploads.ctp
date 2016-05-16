@@ -7,7 +7,7 @@
 				<div class="content-2">
 					<h3 class="upload"><?= $project->musicname ?> </h3><h4 class="upload">Uploader: <?=$project->uploader?></h4><br>
 					<?= $this->Html->media($project->id.$project->title, $options = ['pathPrefix'=>'webroot/tracks/', 'controls'=>'true']); ?>
-					<?= $this->Html->link('Download', ['controller'=>'Projects', 'action'=>'downloads', $project->id]); ?>
+					<?= $this->Html->label($this->Html->link('Download', ['controller'=>'Projects', 'action'=>'downloads', $project->id]), 'success'); ?>
 				</div>
 				<?php endforeach; ?>
 			</table>

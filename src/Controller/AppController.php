@@ -58,7 +58,8 @@ class AppController extends Controller
 
     public $helpers = [
     'Html' => [
-    'className' => 'Bootstrap.BootstrapHtml'
+    'className' => 'Bootstrap.BootstrapHtml',
+    'useFontAwesome' => true
     ],
     'Form' => [
     'className' => 'Bootstrap.BootstrapForm',

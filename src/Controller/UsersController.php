@@ -20,7 +20,7 @@ class UsersController extends AppController{
 			$user = $this->Users->patchEntity($user, $this->request->data);
 			if ($this->Users->save($user)) {
 				$this->Flash->success(__('O usuário foi salvo.'));
-				return $this->redirect(['action' => 'index']);
+				return $this->redirect(['controller' => 'Projects', 'action' => 'index']);
 			}
 			$this->Flash->error(__('Não é possível adicionar o usuário.'));
 		}
